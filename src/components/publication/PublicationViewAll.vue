@@ -1,6 +1,7 @@
 <script setup>
 
 import { ref } from 'vue';
+import PublicationView from './PublicationView.vue';
 
 
 const publications = ref([])
@@ -20,9 +21,7 @@ getAllPublications()
 <template>
     <div class="container">
         <div class="item" v-for="publication in publications">
-
-            {{ publication.title }}
-            <img :src="publication.url" />
+            <PublicationView :publication="publication"></PublicationView>
         </div>
     </div>
 </template>
@@ -36,10 +35,7 @@ getAllPublications()
     margin: 20px;
 }
 
-img {
-    width: 400px;
-    margin: 20px;
-}
+
 .container {
     display: flex;
     flex-direction: column;
