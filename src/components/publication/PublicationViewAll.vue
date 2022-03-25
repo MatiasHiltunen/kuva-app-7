@@ -1,16 +1,35 @@
 <script setup>
 
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+import PublicationView from './PublicationView.vue';
+import PublicationCreate from './PublicationCreate.vue';
 
 
 const publications = ref([])
 
+const state = reactive({
+    error: false,
+})
+
+
 const getAllPublications = async () => {
 
-    const response = await fetch('https://juhaniguru-web-nosql-python.onrender.com/api/publications')
-    const data = await response.json()
+    try {
+        const response = await fetch('https://juhaniguru-web-nosql-python.onrender.com/api/publications')
+        const data = await response.json()
 
-    publications.value = data.publications
+        if (response.status > 300) {
+            if (response.status === 404) {
+                throw new Error("Dataa ei löytynyt")
+            }
+            throw new Error(data.msg)
+        }
+
+        publications.value = data.publications
+    } catch (e) {
+        console.error(e)
+        state.error = true
+    }
 }
 
 getAllPublications()
@@ -18,13 +37,15 @@ getAllPublications()
 </script>
 
 <template>
-    <div class="container">
-        <div class="item" v-for="publication in publications">
-
-            {{ publication.title }}
-            <img :src="publication.url" />
+    <div v-if="state.error">Valitettavasti postauksia ei ollut juuri nyt saatavilla</div>
+    <template v-else>
+        <div class="container">
+            <PublicationCreate></PublicationCreate>
+            <div class="item primary-color" v-for="publication in publications">
+                <PublicationView :publication="publication"></PublicationView>
+            </div>
         </div>
-    </div>
+    </template>
 </template>
 
 <style scoped>
@@ -32,18 +53,14 @@ getAllPublications()
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgb(231, 231, 231);
+    /* background: rgb(231, 231, 231); */
     margin: 20px;
 }
 
-img {
-    width: 400px;
-    margin: 20px;
-}
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 </style>
