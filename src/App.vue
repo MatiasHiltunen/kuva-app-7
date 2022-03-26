@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-import PublicationViewAll from './components/publication/PublicationViewAll.vue';
+import { RouterView } from 'vue-router'
+import NavigationBar from './components/navigation/NavigationBar.vue';
 
 const color = ref('grey')
 
@@ -12,7 +13,8 @@ const toggleColor = ()=>{
 
 <template>
  <button @click="toggleColor">Vaihda väriä</button>
- <PublicationViewAll></PublicationViewAll>
+ <NavigationBar></NavigationBar>
+ <router-view></router-view>
 </template>
 
 <style>
