@@ -1,26 +1,20 @@
 <script setup>
 
-import { ref } from 'vue';
 import PublicationView from './PublicationView.vue';
+import { publicationService } from '../../services/publicationService';
+import { useRouter } from 'vue-router';
 
+const {data, error, isFinished} = publicationService.useGetAll()
 
-const publications = ref([])
-
-const getAllPublications = async () => {
-
-    const response = await fetch('https://juhaniguru-web-nosql-python.onrender.com/api/publications')
-    const data = await response.json()
-
-    publications.value = data.publications
-}
-
-getAllPublications()
+const router = useRouter()
 
 </script>
 
 <template>
-    <div class="container">
-        <div class="item" v-for="publication in publications">
+    <div v-if="error">Valitettavasti postauksia ei ollut juuri nyt saatavilla</div>
+    <div v-if="!isFinished">Ladataan...</div>
+    <div v-else class="container">
+        <div class="item" @click="router.push('/publication/'+ publication._id)" v-for="publication in data.publications">
             <PublicationView :publication="publication"></PublicationView>
         </div>
     </div>

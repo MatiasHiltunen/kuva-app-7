@@ -7,6 +7,7 @@ import { RouterLink } from 'vue-router'
 <template>
     <div class="nav">
         <router-link to="/">Koti</router-link>
+        <router-link to="/create">Uusi</router-link>
         <router-link to="/users">Käyttäjät</router-link>
     </div>
 </template>
