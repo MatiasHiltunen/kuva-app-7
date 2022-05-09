@@ -1,6 +1,7 @@
 <script setup>
 import { onClickOutside } from '@vueuse/core';
 import { inject, reactive, ref } from 'vue'
+import { theme } from '../../theme';
 
 const showLoginView = inject('showLogin')
 
@@ -11,7 +12,7 @@ const credentials = reactive({
 
 const target = ref(null)
 
-onClickOutside(target, ()=>{
+onClickOutside(target, () => {
     showLoginView.value = false
 })
 
@@ -30,22 +31,44 @@ onClickOutside(target, ()=>{
 </template>
 
 <style>
-
 .login {
     width: 250px;
     position: fixed;
     left: 50%;
     right: 50%;
     top: 50%;
-    display: flex;
-    flex-flow: column wrap;
-    background-color: aqua;
     transform: translateX(-50%) translateY(-50%);
-    padding: 20px;
 }
 
-input, label {
+
+
+button {
+    background-color: v-bind('theme.colors.primary');
+    border: none;
+    border-bottom: solid 3px v-bind('theme.colors.light');
+    border-radius: 5px;
+    height: 30px;
+    padding: 5px;
+    margin-top: 12px;
+    padding-top: 6px;
+    color: v-bind('theme.colors.light');
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+button:hover {
+    background-color: v-bind('theme.colors.light');
+    color: v-bind('theme.colors.primary');
+    cursor: pointer;
+    transition: 0.4s color ease-in;
+}
+
+label {
     margin-top: 6px;
+    padding: 3px;
 }
 
+input {
+    margin-bottom: 12px;
+}
 </style>

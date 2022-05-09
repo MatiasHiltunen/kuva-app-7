@@ -39,37 +39,43 @@ const createNewPublication = async () => {
         publicationData.url = ''
 
     }
-
-    console.log("created!")
 }
 
 </script>
 
 <template >
-    <div class="publication-form">
-        <label>Otsikko</label>
-        <small>{{ isDataValid.titleValidation }}</small>
-        <input v-model="publicationData.title" type="text" />
+<form @submit.prevent="">
+    <label>Otsikko</label>
+    <small>{{ isDataValid.titleValidation }}</small>
+    <input v-model="publicationData.title" type="text" />
 
-        <label>Kuvaus</label>
-        <small>{{ isDataValid.descriptionValidation }}</small>
-        <input v-model="publicationData.description" type="text" />
+    <label>Kuvaus</label>
+    <small>{{ isDataValid.descriptionValidation }}</small>
+    <input v-model="publicationData.description" type="text" />
 
-        <label>URL</label>
-        <small>{{ isDataValid.urlValidation }}</small>
-        <input v-model="publicationData.url" type="text" />
+    <label>URL</label>
+    <small>{{ isDataValid.urlValidation }}</small>
+    <input v-model="publicationData.url" type="text" />
 
-        <button :disabled="!isDataValid.isAllValid" @click="createNewPublication">Lähetä</button>
-    </div>
+    <button :disabled="!isDataValid.isAllValid" @click="createNewPublication">Lähetä</button>
+
+</form>
 </template>
 
 <style scoped>
-.publication-form {
-    display: flex;
-    flex-direction: column;
-    height: 200px;
-    width: 200px;
-    justify-content: center;
-}
+    small {
+        padding: 3px;
+        height: 40px;
+    }
+
+    form {
+        width: 300px;
+    }
+
+    button:disabled {
+        color: darkslateblue;
+        cursor: auto;
+    }
+
 </style>
 

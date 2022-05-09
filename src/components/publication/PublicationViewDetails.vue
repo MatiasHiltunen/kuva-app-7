@@ -2,6 +2,7 @@
 
 import { publicationService } from '../../services/publicationService';
 import PublicationView from './PublicationView.vue';
+// import PublicationView from './PublicationView.vue';
 
 
     const props = defineProps({
@@ -17,7 +18,10 @@ import PublicationView from './PublicationView.vue';
     <div v-if="error">Tapahtui virhe</div>
     <div v-else-if="!isFinished">Ladataan...</div>
     <div v-else-if="data">
-        <PublicationView :publication="data.publication"> </PublicationView>
+        <!-- <PublicationView :publication="data.publication"> </PublicationView>
+         -->
+
+         <PublicationView :publication="data.publication"></PublicationView>
     </div>
   
 </template>

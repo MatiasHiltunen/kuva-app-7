@@ -2,38 +2,23 @@
 
 import PublicationView from './PublicationView.vue';
 import { publicationService } from '../../services/publicationService';
-import { useRouter } from 'vue-router';
+import { RouterLink } from 'vue-router';
 
-const {data, error, isFinished} = publicationService.useGetAll()
-
-const router = useRouter()
+const { data, error, isFinished } = publicationService.useGetAll()
 
 </script>
 
 <template>
     <div v-if="error">Valitettavasti postauksia ei ollut juuri nyt saatavilla</div>
-    <div v-if="!isFinished">Ladataan...</div>
-    <div v-else class="container">
-        <div class="item" @click="router.push('/publication/'+ publication._id)" v-for="publication in data.publications">
-            <PublicationView :publication="publication"></PublicationView>
-        </div>
-    </div>
+    <div v-else-if="!isFinished">Ladataan...</div>
+    <template v-else-if="data?.publications">
+
+        <template v-for="publication in data.publications">
+            <router-link :to="`/publication/${publication._id}`">
+                <PublicationView :publication="publication"></PublicationView>
+            </router-link>
+        </template>
+      
+    </template>
 </template>
 
-<style scoped>
-.item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgb(231, 231, 231);
-    margin: 20px;
-}
-
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-</style>
