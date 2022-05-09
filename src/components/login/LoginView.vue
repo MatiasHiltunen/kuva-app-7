@@ -1,6 +1,7 @@
 <script setup>
 import { onClickOutside } from '@vueuse/core';
 import { inject, reactive, ref } from 'vue'
+import { authService } from '../../services/authService';
 
 const showLoginView = inject('showLogin')
 
@@ -15,10 +16,17 @@ onClickOutside(target, ()=>{
     showLoginView.value = false
 })
 
+const login = async ()=>{
+    await authService.useLogin(credentials)
+
+    credentials.username = ''
+    credentials.password = ''
+}
+
 </script>
 
 <template>
-    <form class="login" ref="target">
+    <form class="login" ref="target" @submit.prevent="login">
         <label>Käyttäjänimi</label>
         <input v-model="credentials.username" type="text">
 
