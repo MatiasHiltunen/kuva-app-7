@@ -1,4 +1,5 @@
 import { createFetch } from "@vueuse/core";
+import { authService } from "../services/authService";
 import { globalState, isAuth } from "../store";
 
 export const useApi = createFetch({
@@ -13,6 +14,24 @@ export const useApi = createFetch({
             }
 
             return { options }
+        },
+        onFetchError({data, error}){
+
+            /*
+                {
+                    "msg": [
+                        "Unauthorized"
+                    ]
+                } 
+            */
+
+            if(data?.msg && data.msg instanceof Array && data.msg.includes('Unauthorized')){
+
+                authService.useLogout()
+
+            }
+
+            return {data, error}
         }
     }
 })
