@@ -3,6 +3,7 @@ import PublicationViewAll from './components/publication/PublicationViewAll.vue'
 import UsersView from './components/user/UsersView.vue'
 import PublicationCreate from './components/publication/PublicationCreate.vue'
 import PublicationViewDetails from './components/publication/PublicationViewDetails.vue'
+import registrationViewVue from './components/registration/registrationView.vue'
 import { isAuth } from './store'
 
 export const router = createRouter({
@@ -27,6 +28,11 @@ export const router = createRouter({
             name: 'Yksittäinen postaus',
             component: PublicationViewDetails,
             props: true
+        },
+        {
+            path: '/register',
+            name: 'Rekisteröidy',
+            component: registrationViewVue
         }
     ]
 })
